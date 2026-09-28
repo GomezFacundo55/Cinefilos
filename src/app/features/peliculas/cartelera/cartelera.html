@@ -1,1 +1,79 @@
-<p>cartelera works!</p>
+<section class="cartelera" aria-labelledby="cartelera-titulo">
+  <header class="cartelera-encabezado">
+    <div class="cartelera-presentacion">
+      <p class="cartelera-kicker"><span aria-hidden="true"></span> Tu próxima historia empieza acá</p>
+      <h1 id="cartelera-titulo">Cartelera</h1>
+      <p class="cartelera-descripcion">
+        Elegí una película, encontrá tu función y preparate para disfrutarla.
+      </p>
+    </div>
+
+    <form class="buscador" role="search" (submit)="$event.preventDefault()">
+      <label class="solo-lectores" for="buscar-pelicula">Buscar películas por título o género</label>
+      <span class="buscador-icono" aria-hidden="true">⌕</span>
+      <input
+        id="buscar-pelicula"
+        type="search"
+        placeholder="¿Qué tenés ganas de ver?"
+        [value]="busqueda()"
+        (input)="buscar($event)"
+      />
+      <kbd aria-hidden="true">⌕</kbd>
+    </form>
+  </header>
+
+  <div class="cartelera-controles">
+    <div class="filtros-genero" aria-label="Filtrar películas por género">
+      @for (genero of generos(); track genero) {
+        <button
+          class="filtro-chip"
+          type="button"
+          [class.seleccionado]="generoSeleccionado() === genero"
+          [attr.aria-pressed]="generoSeleccionado() === genero"
+          (click)="seleccionarGenero(genero)"
+        >
+          {{ genero }}
+        </button>
+      }
+    </div>
+    <p class="cantidad-resultados" aria-live="polite">
+      @if (!cargando()) {
+        {{ filtradas().length }} {{ filtradas().length === 1 ? 'película' : 'películas' }}
+      }
+    </p>
+  </div>
+
+  @if (cargando()) {
+    <div class="peliculas-grid" aria-label="Cargando cartelera" aria-busy="true">
+      @for (placeholder of [1, 2, 3]; track placeholder) {
+        <div class="ticket-cargando"></div>
+      }
+    </div>
+  } @else if (error()) {
+    <div class="estado-cartelera estado-error" role="alert">
+      <span class="estado-icono" aria-hidden="true">!</span>
+      <h2>No pudimos cargar la cartelera</h2>
+      <p>{{ error() }}</p>
+      <button class="boton-reintentar" type="button" (click)="cargar()">Intentar de nuevo</button>
+    </div>
+  } @else if (filtradas().length > 0) {
+    <div class="peliculas-grid">
+      @for (pelicula of filtradas(); track pelicula.id) {
+        <app-pelicula-card [pelicula]="pelicula" (ver)="abrir($event)" />
+      }
+    </div>
+  } @else {
+    <div class="estado-cartelera">
+      <span class="estado-icono" aria-hidden="true">⌕</span>
+      <h2>No encontramos esa película</h2>
+      <p>Probá con otro título o elegí un género diferente.</p>
+      <button
+        class="boton-reintentar"
+        type="button"
+        (click)="busqueda.set(''); seleccionarGenero('Todos')"
+      >
+        Limpiar filtros
+      </button>
+    </div>
+  }
+</section>

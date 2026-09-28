@@ -1,0 +1,74 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.barra {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  min-height: 4.6rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.75rem clamp(1.25rem, 5vw, 4.5rem);
+  border-bottom: 1px solid #ffffff17;
+  background: #151822dd;
+  backdrop-filter: blur(18px);
+}
+
+.marca {
+  color: #fff8ea;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+
+.barra nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.barra nav a {
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.55rem;
+  color: #b9bac5;
+  font-size: 0.83rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.barra nav a:hover,
+.barra nav a.activo {
+  background: #ffffff0d;
+  color: #f0b94e;
+}
+
+main {
+  min-height: calc(100vh - 4.6rem);
+}
+
+@media (max-width: 520px) {
+  .barra {
+    min-height: 4.1rem;
+    gap: 0.5rem;
+    padding-inline: 1rem;
+  }
+
+  .marca {
+    font-size: 1.3rem;
+  }
+
+  .barra nav {
+    gap: 0;
+  }
+
+  .barra nav a {
+    padding: 0.55rem 0.5rem;
+    font-size: 0.72rem;
+  }
+}

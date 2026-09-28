@@ -1,0 +1,7 @@
+/* Ruta relativa hacia src/styles.scss desde esta carpeta */
+@use '../../../../styles.scss' as global;
+
+:host {
+  display: block;
+  width: 100%;
+}

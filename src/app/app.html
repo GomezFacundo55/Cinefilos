@@ -1,1 +1,13 @@
-<router-outlet />
+<header class="barra">
+  <a routerLink="/cartelera" class="marca">Cinéfilos</a>
+  
+  <nav>
+    <a routerLink="/cartelera" routerLinkActive="activo">Cartelera</a>
+    <a routerLink="/cuenta" routerLinkActive="activo">Mi Cuenta</a>
+    <a routerLink="/login" routerLinkActive="activo">Ingresar</a>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
