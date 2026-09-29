@@ -99,21 +99,8 @@ Sistema web para que un cine venda sus entradas online. Este documento resume **
 |---|---|---|
 | FA-01 | Pantalla con un mapa de todo el cine que indique la sala de la entrada. | El cliente aclaró en el mail del 30/01 que todavía no tiene luz verde. |
 
----
 
-## 9. Decisiones y dudas a confirmar
-
-Puntos que los mails no resuelven. Conviene definirlos con el docente antes de implementarlos.
-
-1. **Pagos.** Los mails piden que "paguen", pero no dicen cómo. ¿Se conecta una pasarela real o el pago es simulado para el TP? Propuesta: pago simulado, con la estructura lista para conectar una pasarela real.
-2. **Bloqueo de butacas durante la compra.** ¿Se reservan unos minutos mientras el cliente paga, o solo se ocupan al confirmar? Propuesta: reserva temporal, apoyada en el tiempo real de Supabase.
-3. **Compra anónima y edad.** Un anónimo no declara su fecha de nacimiento, así que no se puede comprobar su edad. Propuesta: exigir registro para películas con restricción de edad.
-4. **Cupón de la primera compra y cupón para mayores de 50.** ¿Se pueden acumular en una misma compra? Propuesta: se aplica un solo cupón por compra, el de mayor descuento.
-5. **Precio de las VIP.** El mail dice "más alto" sin indicar cuánto. Propuesta: un porcentaje de recargo configurable por el administrador.
-6. **Alertas de estreno.** No se indica el canal. Propuesta: notificación push de la PWA y aviso dentro de la aplicación.
-7. **Orden de canje con crédito, cupón y puntos.** Definir qué se descuenta primero cuando una misma compra combina varios beneficios.
-
-## 10. Plan de trabajo
+## 9. Plan de trabajo
 
 | Fase | Contenido | Requisitos |
 |---|---|---|
