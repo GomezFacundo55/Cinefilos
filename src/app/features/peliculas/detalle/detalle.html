@@ -1,1 +1,120 @@
-<p>detalle works!</p>
+<section class="detalle" aria-labelledby="detalle-titulo">
+  <a class="volver" routerLink="/cartelera">
+    <span aria-hidden="true">←</span> Volver a cartelera
+  </a>
+
+  @if (cargando()) {
+    <div class="detalle-cargando" aria-busy="true" aria-label="Cargando película y funciones">
+      <div class="poster-cargando"></div>
+      <div class="datos-cargando">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  } @else if (error()) {
+    <div class="estado-detalle" role="alert">
+      <span class="estado-icono" aria-hidden="true">!</span>
+      <h1 id="detalle-titulo">No pudimos abrir esta película</h1>
+      <p>{{ error() }}</p>
+      @if (peliculaId()) {
+        <button class="boton-principal" type="button" (click)="cargar()">Intentar de nuevo</button>
+      }
+    </div>
+  } @else if (pelicula(); as p) {
+    <article class="pelicula-hero">
+      <div class="poster">
+        @if (p.poster_url) {
+          <img [src]="p.poster_url" [alt]="'Póster de ' + p.titulo" />
+        } @else {
+          <div class="poster-fallback">
+            <span>CINÉFILOS · PRESENTA</span>
+            <strong>{{ p.titulo }}</strong>
+            <i aria-hidden="true">✦</i>
+          </div>
+        }
+        @if (p.clasificacion_edad) {
+          <span class="clasificacion">{{ p.clasificacion_edad }}</span>
+        }
+      </div>
+
+      <div class="pelicula-informacion">
+        <p class="detalle-kicker"><span aria-hidden="true"></span> La película</p>
+        <h1 id="detalle-titulo">{{ p.titulo }}</h1>
+
+        <div class="metadatos">
+          <span>{{ p.duracion_min | duracion }}</span>
+          @if (p.clasificacion_edad) {
+            <span>{{ p.clasificacion_edad }}</span>
+          }
+          @if (p.estreno) {
+            <span>Estreno {{ p.estreno | date: 'd MMM y' }}</span>
+          }
+        </div>
+
+        @if (p.generos.length > 0) {
+          <div class="generos" aria-label="Géneros de la película">
+            @for (genero of p.generos; track genero) {
+              <span>{{ genero }}</span>
+            }
+          </div>
+        }
+
+        @if (p.sinopsis) {
+          <div class="sinopsis">
+            <h2>Sinopsis</h2>
+            <p>{{ p.sinopsis }}</p>
+          </div>
+        }
+      </div>
+    </article>
+
+    <section class="funciones" aria-labelledby="funciones-titulo">
+      <div class="seccion-encabezado">
+        <div>
+          <p class="detalle-kicker">Encontrá tu horario</p>
+          <h2 id="funciones-titulo">Próximas funciones</h2>
+        </div>
+        <span class="contador-funciones">
+          {{ funciones().length }} {{ funciones().length === 1 ? 'función' : 'funciones' }}
+        </span>
+      </div>
+
+      @if (funciones().length > 0) {
+        <div class="funciones-lista">
+          @for (funcion of funciones(); track funcion.id) {
+            <article class="funcion-ticket">
+              <div class="funcion-horario">
+                <time [attr.datetime]="funcion.inicio">
+                  <span>{{ funcion.inicio | date: 'EEE d MMM' }}</span>
+                  <strong>{{ funcion.inicio | date: 'HH:mm' }}</strong>
+                </time>
+              </div>
+              <div class="funcion-detalles">
+                <strong>Sala {{ funcion.sala_id }}</strong>
+                <span>{{ funcion.formato }} · {{ funcion.idioma }}</span>
+              </div>
+              <div class="funcion-precio">
+                <span>Desde</span>
+                <strong>{{ funcion.precio_base | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</strong>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="sin-funciones">
+          <span aria-hidden="true">✦</span>
+          <div>
+            <h3>Aún no hay funciones programadas</h3>
+            <p>Volvé a consultar más adelante para encontrar nuevos horarios.</p>
+          </div>
+        </div>
+      }
+
+      <p class="compra-pendiente">
+        <span aria-hidden="true">i</span>
+        La compra y selección de butacas se habilitarán en el próximo avance.
+      </p>
+    </section>
+  }
+</section>

@@ -28,7 +28,7 @@ Sistema web para que un cine venda sus entradas online. Este documento resume **
 | RF-10 | El cine tiene varias salas, todas con la misma forma: 20 filas (A a T) y 3 bloques de 4, 20 y 4 butacas. | Mail 1 | ✅ Función `crear_butacas` |
 | RF-11 | Las filas J y K son accesibles (personas con discapacidad), con bloques de 2, 10 y 2 butacas. | 12/02 | ✅ |
 | RF-12 | Las filas R, S y T son VIP, con precio más alto. | 10/03 | 🔧 Tipo de butaca listo; falta el recargo |
-| RF-13 | Cada función tiene película, sala, horario, formato (2D, 3D, 4D, 5D) e idioma (castellano o subtitulada). | Mail 1 | ✅ Con restricciones en la base |
+| RF-13 | Cada función tiene película, sala, horario, formato (2D, 3D, 4D, 5D) e idioma (castellano o subtitulada). | Mail 1 | 🔧 El detalle muestra horarios, sala, formato, idioma y precio; falta reservar/comprar |
 | RF-14 | Debe pasar al menos media hora entre el fin de una función y el inicio de la siguiente en la misma sala. | Mail 1 | ✅ Trigger `validar_funcion` |
 | RF-15 | Bajo ningún término dos funciones coinciden en la misma sala al mismo tiempo. | 06/02 | ✅ Mismo trigger |
 | RF-16 | Asignación automática de sala: el administrador indica película, días y hora (por ejemplo lunes, martes y viernes a las 18 h) y el sistema elige una sala libre. | 06/02 | ⬜ |
@@ -85,8 +85,8 @@ Sistema web para que un cine venda sus entradas online. Este documento resume **
 
 | ID | Requisito | Fuente | Estado |
 |---|---|---|---|
-| RNF-01 | Interfaces fáciles de navegar y entender, para clientes y empleados, con poco scroll. | 28/02 | 🔧 Cartelera responsive con búsqueda, filtros, estados de carga/error/vacío y acceso directo a funciones; falta aplicar al resto de pantallas |
-| RNF-02 | Estilo visual único y producido. | Consigna | 🔧 Identidad de boletería: cartelera oscura, tarjetas de película con forma de ticket, talón troquelado y microinteracciones; falta aplicar al resto de pantallas |
+| RNF-01 | Interfaces fáciles de navegar y entender, para clientes y empleados, con poco scroll. | 28/02 | 🔧 Cartelera y detalle responsive con búsqueda, filtros, estados claros y acceso rápido a los horarios; falta aplicar al resto de pantallas |
+| RNF-02 | Estilo visual único y producido. | Consigna | 🔧 Identidad de boletería en cartelera y detalle: pósteres, entradas/talones, paleta oscura y ámbar, microinteracciones; falta aplicar al resto de pantallas |
 | RNF-03 | Angular con buenas prácticas y técnicas vistas en clase. | Consigna | 🔧 |
 | RNF-04 | Integración con Supabase (base, autenticación, seguridad, tiempo real). | Consigna | 🔧 |
 | RNF-05 | PWA instalable. | Consigna | 🔧 Manifiesto, íconos y service worker configurados; falta validar instalación/offline tras desplegar |

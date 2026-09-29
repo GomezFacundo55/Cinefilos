@@ -75,4 +75,6 @@ La pantalla de cartelera utiliza una plantilla y estilos propios. Cada película
 
 La tarjeta reutilizable vive en `src/app/shared/pelicula-card/`. Se comunica con la cartelera mediante `@Input` y `@Output`, e integra el pipe de duración y la directiva de resaltado. Se conserva en la carpeta de `shared/pipes/pelicula-card` una segunda tarjeta no conectada; no es la usada por esta pantalla.
 
+El detalle de película presenta el póster, sinopsis, clasificación, géneros y duración, junto con las próximas funciones, sala, formato, idioma y precio. Los estados de carga/error y los identificadores inválidos tienen mensajes visibles; las funciones se consultan junto con la película y se evita mostrar resultados de una navegación anterior. La selección de butacas y compra todavía no están implementadas.
+
 _Se completa a medida que se implementan los módulos (tiempo real, PDF con QR, panel de administración, PWA)._

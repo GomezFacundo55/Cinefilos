@@ -1,51 +1,66 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Peliculas } from '../../../core/peliculas';
 import { Funcion, Pelicula } from '../../../core/models';
+import { Peliculas } from '../../../core/peliculas';
 import { DuracionPipe } from '../../../shared/pipes/duracion-pipe';
 
 @Component({
   selector: 'app-detalle',
   imports: [RouterLink, DatePipe, CurrencyPipe, DuracionPipe],
-  template: `
-    <a routerLink="/cartelera">← Volver a la cartelera</a>
-
-    @if (error()) { <p>{{ error() }}</p> }
-
-    @if (pelicula(); as p) {
-      <h1>{{ p.titulo }}</h1>
-      <p>{{ p.duracion_min | duracion }} · {{ p.clasificacion_edad }} · {{ p.generos.join(', ') }}</p>
-      <p>{{ p.sinopsis }}</p>
-
-      <h2>Funciones</h2>
-      @for (f of funciones(); track f.id) {
-        <div>
-          {{ f.inicio | date: "EEEE d 'de' MMMM, HH:mm" }} ·
-          {{ f.formato }} · {{ f.idioma }} ·
-          {{ f.precio_base | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}
-        </div>
-      } @empty {
-        <p>No hay funciones programadas.</p>
-      }
-    }
-  `,
+  templateUrl: './detalle.html',
+  styleUrl: './detalle.scss',
 })
 export class Detalle implements OnInit {
   private ruta = inject(ActivatedRoute);
   private servicio = inject(Peliculas);
+  private destroyRef = inject(DestroyRef);
+  private solicitudActual = 0;
 
   pelicula = signal<Pelicula | null>(null);
   funciones = signal<Funcion[]>([]);
+  peliculaId = signal<number | null>(null);
+  cargando = signal(true);
   error = signal('');
 
-  async ngOnInit() {
-    const id = Number(this.ruta.snapshot.paramMap.get('id'));  // lee :id de la URL
+  ngOnInit() {
+    this.ruta.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((parametros) => {
+      void this.cargar(Number(parametros.get('id')));
+    });
+  }
+
+  async cargar(id = this.peliculaId()) {
+    const solicitud = ++this.solicitudActual;
+    this.pelicula.set(null);
+    this.funciones.set([]);
+    this.error.set('');
+    this.cargando.set(true);
+
+    if (id === null || !Number.isSafeInteger(id) || id < 1) {
+      this.error.set('El identificador de la película no es válido.');
+      this.cargando.set(false);
+      this.peliculaId.set(null);
+      return;
+    }
+
+    this.peliculaId.set(id);
+
     try {
-      this.pelicula.set(await this.servicio.obtener(id));
-      this.funciones.set(await this.servicio.funciones(id));
-    } catch (e: any) {
-      this.error.set(e.message ?? 'No se pudo cargar la película');
+      const [pelicula, funciones] = await Promise.all([
+        this.servicio.obtener(id),
+        this.servicio.funciones(id),
+      ]);
+
+      if (solicitud !== this.solicitudActual) return;
+      this.pelicula.set(pelicula);
+      this.funciones.set(funciones);
+    } catch (error: unknown) {
+      if (solicitud !== this.solicitudActual) return;
+      console.error('No se pudo cargar el detalle y las funciones de la película.', error);
+      this.error.set('No pudimos cargar la película y sus funciones. Revisá tu conexión e intentá de nuevo.');
+    } finally {
+      if (solicitud === this.solicitudActual) this.cargando.set(false);
     }
   }
 }
