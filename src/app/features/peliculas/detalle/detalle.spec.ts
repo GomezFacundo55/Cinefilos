@@ -24,6 +24,7 @@ describe('Detalle', () => {
       idioma: 'Castellano',
       precio_base: 5000,
       sala_id: 2,
+      recargo_vip_pct: 30,
     },
   ];
 

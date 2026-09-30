@@ -300,6 +300,28 @@
   font-size: 0.77rem;
 }
 
+.funcion-cta {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+  color: #e98ab0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.funcion-cta:hover,
+.funcion-cta:focus-visible {
+  color: #f5c2d5;
+}
+
+.funcion-cta:focus-visible {
+  outline: 2px solid #f5c2d5;
+  outline-offset: 3px;
+}
+
 .funcion-precio {
   display: grid;
   justify-items: end;

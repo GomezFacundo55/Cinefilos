@@ -38,6 +38,19 @@ export class Peliculas {
     return data as Funcion[];
   }
 
+  async obtenerFuncion(id: number): Promise<Funcion> {
+    const { data, error } = await this.supabase
+      .from('funciones')
+      .select('*')
+      .eq('id', id)
+      .eq('estado', 'programada')
+      .gt('inicio', new Date().toISOString())
+      .single();
+
+    if (error) throw error;
+    return data as Funcion;
+  }
+
   // Convierte la respuesta anidada de Supabase en un objeto simple con generos: string[]
   private armar(p: any): Pelicula {
     const { pelicula_generos, ...resto } = p;

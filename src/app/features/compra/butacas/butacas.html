@@ -1,0 +1,141 @@
+<section class="seleccion">
+  <a class="volver" routerLink="/cartelera">
+    <span aria-hidden="true">←</span> Volver
+  </a>
+
+  @if (cargando()) {
+    <div class="estado-mapa" aria-busy="true" role="status">
+      <span class="spinner" aria-hidden="true"></span>
+      <p>Cargando mapa de butacas…</p>
+    </div>
+  } @else if (error()) {
+    <section class="estado-mapa" role="alert">
+      <span class="estado-icono" aria-hidden="true">!</span>
+      <h1>No pudimos abrir la selección de butacas</h1>
+      <p>{{ error() }}</p>
+      <button class="boton-primario" type="button" (click)="reintentar()">
+        Intentar de nuevo
+      </button>
+    </section>
+  } @else if (funcion(); as f) {
+    <header class="encabezado">
+      <p class="kicker">Elegí dónde querés vivir la película</p>
+      <h1>Seleccioná tus butacas</h1>
+      <p class="funcion-resumen">
+        {{ f.inicio | date: "EEEE d 'de' MMMM · HH:mm" }} · Sala {{ f.sala_id }} ·
+        {{ f.formato }} · {{ f.idioma }}
+      </p>
+    </header>
+
+    @if (errorRealtime()) {
+      <p class="aviso aviso-conexion" role="status">{{ errorRealtime() }}</p>
+    }
+    @if (aviso()) {
+      <p class="aviso" role="status">{{ aviso() }}</p>
+    }
+
+    <section class="mapa-panel" aria-label="Mapa interactivo de butacas">
+      <div class="pantalla">
+        <span aria-hidden="true">✦</span> PANTALLA
+      </div>
+      <p class="pantalla-ayuda">Frente de la sala</p>
+
+      <div class="pasillo-frontal" aria-label="Pasillo frontal y salidas laterales">
+        <span class="salida-lateral">SALIDA</span>
+        <span class="pasillo-frontal-texto">Pasillo frontal</span>
+        <span class="salida-lateral">SALIDA</span>
+      </div>
+
+      <div class="mapa-desplazable">
+        <div class="mapa">
+          @for (fila of filas(); track fila) {
+            @if (fila === 'E') {
+              <div class="mapa-seccion mapa-seccion-accesible">
+                Butacas accesibles <span>Filas E · F</span>
+              </div>
+            }
+            @if (fila === 'G') {
+              <div class="mapa-seccion">Resto de la sala · Filas G–T</div>
+            }
+            <div
+              class="fila"
+              [class.fila-accesible]="butacasDelBloque(fila, 2).some(esAccesible)"
+              [attr.aria-label]="
+                butacasDelBloque(fila, 2).some(esAccesible)
+                  ? 'Fila ' + fila + ', butacas accesibles'
+                  : 'Fila ' + fila
+              "
+            >
+              <span class="fila-letra">{{ fila }}</span>
+              @for (bloque of [1, 2, 3]; track bloque) {
+                <div class="bloque" [class]="'bloque bloque-' + bloque">
+                  @for (butaca of butacasDelBloque(fila, bloque); track butaca.id) {
+                    <button
+                      class="butaca"
+                      type="button"
+                      [class.accesible]="butaca.tipo === 'accesible'"
+                      [class.vip]="butaca.tipo === 'vip'"
+                      [class.ocupada]="ocupadas().has(butaca.id)"
+                      [class.seleccionada]="seleccionadas().includes(butaca.id)"
+                      [disabled]="ocupadas().has(butaca.id)"
+                      [attr.aria-label]="etiquetaButaca(butaca)"
+                      [attr.aria-pressed]="seleccionadas().includes(butaca.id)"
+                      (click)="alternar(butaca)"
+                    >
+                      {{ butaca.numero }}
+                    </button>
+                  }
+                </div>
+                @if (bloque < 3) {
+                  <span class="pasillo-central" aria-hidden="true">
+                    @if (fila === filas()[0]) {
+                      <span>SALIDA</span>
+                    }
+                  </span>
+                }
+              }
+              <span class="fila-letra" aria-hidden="true">{{ fila }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="leyenda" aria-label="Leyenda del mapa">
+        <span><i class="muestra disponible"></i> Disponible</span>
+        <span><i class="muestra elegida"></i> Tu selección</span>
+        <span><i class="muestra bloqueada"></i> Ocupada</span>
+        <span><i class="muestra accesible"></i> Accesible</span>
+        <span><i class="muestra vip"></i> VIP</span>
+      </div>
+    </section>
+
+    <section class="resumen" aria-labelledby="resumen-titulo">
+      <div class="resumen-datos">
+        <div>
+          <h2 id="resumen-titulo">Tu selección</h2>
+          @if (butacasElegidas().length > 0) {
+            <p class="asientos-elegidos">
+              @for (butaca of butacasElegidas(); track butaca.id) {
+                <span>Fila {{ butaca.fila }} · Butaca {{ butaca.numero }}</span>
+              }
+            </p>
+          } @else {
+            <p class="sin-seleccion">Elegí hasta 8 butacas en el mapa.</p>
+          }
+        </div>
+        <div class="total">
+          <span>{{ butacasElegidas().length }} {{ butacasElegidas().length === 1 ? 'entrada' : 'entradas' }}</span>
+          <strong>{{ total() | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</strong>
+        </div>
+      </div>
+      @if (butacasElegidas().length > 0) {
+        <button class="boton-limpiar" type="button" (click)="limpiarSeleccion()">
+          Limpiar selección
+        </button>
+      }
+      <p class="paso-pendiente">
+        La compra se habilitará en el siguiente paso. La disponibilidad se vuelve a validar al confirmar.
+      </p>
+    </section>
+  }
+</section>

@@ -64,7 +64,7 @@ Script completo en [`cinefilos_schema_v1.sql`](./sql/cinefilos_schema_v1.sql).
 4. **Compra atómica.** La función `comprar_entradas` crea la compra y todas sus entradas en una sola transacción. Si una butaca ya se vendió, no se guarda nada.
 5. **Seguridad con RLS.** El catálogo es público para leer y solo el administrador lo modifica. Cada usuario ve únicamente sus propios datos. La clave publicable de Supabase es pública por diseño; la clave secreta nunca se usa en el front.
 6. **Perfil automático.** Un trigger crea la fila de `perfiles` cuando alguien se registra, con los datos enviados en el alta.
-7. **Salas con forma fija generadas por función.** `crear_butacas` arma las 20 filas y los bloques 4/20/4 (2/10/2 en las filas accesibles J y K), y un trigger la ejecuta al crear cada sala.
+7. **Salas con forma fija generadas por función.** `crear_butacas` genera 20 filas A–T con 28 butacas en bloques 4/20/4; E/F son accesibles y R/S/T son VIP.
 8. **Guard de rutas.** `authGuard` protege las pantallas que requieren sesión.
 9. **Interfaz pensada para el cliente apurado.** La cartelera ofrece búsqueda por título/género, filtros de un toque, estados de carga, error y vacío, y acciones visibles para llegar a las funciones.
 10. **Identidad visual "boletería de cine".** La cartelera usa fondo oscuro, tarjetas de película estilo entrada con talón troquelado, etiquetas de género y acción visible; estilos locales en los componentes y base visual global en `styles.scss`.
@@ -75,6 +75,14 @@ La pantalla de cartelera utiliza una plantilla y estilos propios. Cada película
 
 La tarjeta reutilizable vive en `src/app/shared/pelicula-card/`. Se comunica con la cartelera mediante `@Input` y `@Output`, e integra el pipe de duración y la directiva de resaltado. Se conserva en la carpeta de `shared/pipes/pelicula-card` una segunda tarjeta no conectada; no es la usada por esta pantalla.
 
-El detalle de película presenta el póster, sinopsis, clasificación, géneros y duración, junto con las próximas funciones, sala, formato, idioma y precio. Los estados de carga/error y los identificadores inválidos tienen mensajes visibles; las funciones se consultan junto con la película y se evita mostrar resultados de una navegación anterior. La selección de butacas y compra todavía no están implementadas.
+El detalle de película presenta el póster, sinopsis, clasificación, géneros y duración, junto con las próximas funciones, sala, formato, idioma y precio. Los estados de carga/error y los identificadores inválidos tienen mensajes visibles; las funciones se consultan junto con la película y se evita mostrar resultados de una navegación anterior.
+
+### Selección de butacas
+
+Desde una función se navega a `/funcion/:id/butacas`. El mapa conserva el orden alfabético A–T: A–D quedan delante, E/F son las dos filas accesibles y G–T continúan detrás; J/K son filas normales. Todas las filas tienen 28 butacas en bloques 4/20/4; las butacas E/F se identifican en celeste y llevan icono, mientras que las VIP se muestran en rosa. El recargo VIP aparece en el total preliminar. El pasillo frontal y los dos pasillos entre bloques permanecen libres y señalizados. La migración [`20260929143500_move_accessible_rows_to_ef.sql`](./supabase/migrations/20260929143500_move_accessible_rows_to_ef.sql) conserva los IDs de butaca y transforma las filas anteriores E–K al nuevo orden. La migración [`20260929144800_update_seat_generator_for_ef.sql`](./supabase/migrations/20260929144800_update_seat_generator_for_ef.sql) fue seguida por [`20260929150100_accessible_rows_28_standard.sql`](./supabase/migrations/20260929150100_accessible_rows_28_standard.sql), que completa E/F hasta 28 butacas y actualiza el generador de salas nuevas. La interfaz permite elegir hasta ocho asientos, el mismo límite que valida el RPC existente `comprar_entradas`.
+
+Las butacas ocupadas se consultan mediante `butacas_ocupadas`, una función de base de datos con permisos limitados que devuelve solo identificadores de asiento; la aplicación no lee las compras ni las entradas de otros clientes. Un trigger emite por Supabase Realtime únicamente el identificador de butaca y su estado de ocupación, sin publicar `compra_id`, correo ni código QR.
+
+Antes de probar la pantalla, ejecutar una vez [`20260929120000_realtime_seat_availability.sql`](./supabase/migrations/20260929120000_realtime_seat_availability.sql) desde el SQL Editor de Supabase. La selección todavía no confirma una compra: el índice único y `comprar_entradas` siguen siendo la validación final contra carreras entre clientes.
 
 _Se completa a medida que se implementan los módulos (tiempo real, PDF con QR, panel de administración, PWA)._

@@ -93,6 +93,13 @@
               <div class="funcion-detalles">
                 <strong>Sala {{ funcion.sala_id }}</strong>
                 <span>{{ funcion.formato }} · {{ funcion.idioma }}</span>
+                <a
+                  class="funcion-cta"
+                  [routerLink]="['/funcion', funcion.id, 'butacas']"
+                  [attr.aria-label]="'Elegir butacas para la función del ' + (funcion.inicio | date: 'd MMMM, HH:mm')"
+                >
+                  Elegir butacas <span aria-hidden="true">→</span>
+                </a>
               </div>
               <div class="funcion-precio">
                 <span>Desde</span>
@@ -113,7 +120,7 @@
 
       <p class="compra-pendiente">
         <span aria-hidden="true">i</span>
-        La compra y selección de butacas se habilitarán en el próximo avance.
+        La confirmación de la compra se habilitará en el siguiente paso.
       </p>
     </section>
   }

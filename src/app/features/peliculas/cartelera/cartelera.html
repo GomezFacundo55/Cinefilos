@@ -8,6 +8,34 @@
       </p>
     </div>
 
+    <section class="destacadas" aria-labelledby="destacadas-titulo">
+  <div class="destacadas-encabezado">
+    <div>
+      <p class="cartelera-kicker">Elegí tu próxima historia</p>
+      <h2 id="destacadas-titulo">Para descubrir</h2>
+    </div>
+    <span>Deslizá para explorar →</span>
+  </div>
+
+  <div class="destacadas-lista">
+    @for (pelicula of peliculas(); track pelicula.id) {
+      <button
+        class="poster-rapido"
+        type="button"
+        [attr.aria-label]="'Ver funciones de ' + pelicula.titulo"
+        (click)="abrir(pelicula.id)"
+      >
+        @if (pelicula.poster_url) {
+          <img [src]="pelicula.poster_url" [alt]="'Póster de ' + pelicula.titulo" />
+        } @else {
+          <span class="poster-rapido-fallback">{{ pelicula.titulo }}</span>
+        }
+        <span class="poster-rapido-titulo">{{ pelicula.titulo }}</span>
+      </button>
+    }
+  </div>
+</section>
+
     <form class="buscador" role="search" (submit)="$event.preventDefault()">
       <label class="solo-lectores" for="buscar-pelicula">Buscar películas por título o género</label>
       <span class="buscador-icono" aria-hidden="true">⌕</span>

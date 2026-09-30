@@ -16,4 +16,16 @@ export interface Funcion {
   idioma: string;
   precio_base: number;
   sala_id: number;
+  recargo_vip_pct: number;
+}
+
+export type TipoButaca = 'normal' | 'accesible' | 'vip';
+
+export interface Butaca {
+  id: number;
+  sala_id: number;
+  fila: string;
+  numero: number;
+  tipo: TipoButaca;
+  bloque: number | null;
 }

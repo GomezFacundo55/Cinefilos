@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: 'cuenta', canActivate: [authGuard], loadComponent: () => import('./features/cuenta/cuenta').then(m => m.Cuenta) },
   { path: 'cartelera', loadComponent: () => import('./features/peliculas/cartelera/cartelera').then(m => m.Cartelera) },
   { path: 'pelicula/:id', loadComponent: () => import('./features/peliculas/detalle/detalle').then(m => m.Detalle) },
+  { path: 'funcion/:id/butacas', loadComponent: () => import('./features/compra/butacas/butacas').then(m => m.SeleccionButacas) },
   { path: '', pathMatch: 'full', redirectTo: 'cartelera' },
 ];

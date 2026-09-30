@@ -25,8 +25,8 @@ Sistema web para que un cine venda sus entradas online. Este documento resume **
 
 | ID | Requisito | Fuente | Estado |
 |---|---|---|---|
-| RF-10 | El cine tiene varias salas, todas con la misma forma: 20 filas (A a T) y 3 bloques de 4, 20 y 4 butacas. | Mail 1 | ✅ Función `crear_butacas` |
-| RF-11 | Las filas J y K son accesibles (personas con discapacidad), con bloques de 2, 10 y 2 butacas. | 12/02 | ✅ |
+| RF-10 | El cine tiene varias salas con 20 filas (A a T) y 28 butacas por fila en tres bloques de 4, 20 y 4. | Mail 1 | 🔧 Filas normales, incluidas J/K, en bloques 4/20/4; E/F accesibles en el mismo esquema; migración y generador de Supabase pendientes |
+| RF-11 | Dos filas accesibles para personas con discapacidad, con 28 butacas por fila. | 12/02 | 🔧 E/F accesibles, celestes y distribuidas 4/20/4; migración de butacas y actualización del generador pendientes de aplicar en Supabase |
 | RF-12 | Las filas R, S y T son VIP, con precio más alto. | 10/03 | 🔧 Tipo de butaca listo; falta el recargo |
 | RF-13 | Cada función tiene película, sala, horario, formato (2D, 3D, 4D, 5D) e idioma (castellano o subtitulada). | Mail 1 | 🔧 El detalle muestra horarios, sala, formato, idioma y precio; falta reservar/comprar |
 | RF-14 | Debe pasar al menos media hora entre el fin de una función y el inicio de la siguiente en la misma sala. | Mail 1 | ✅ Trigger `validar_funcion` |
@@ -38,10 +38,10 @@ Sistema web para que un cine venda sus entradas online. Este documento resume **
 
 | ID | Requisito | Fuente | Estado |
 |---|---|---|---|
-| RF-20 | Se puede comprar registrado o como anónimo, siempre que se pague. | Mail 1 | 🔧 Compra lista; falta el pago |
+| RF-20 | Se puede comprar registrado o como anónimo, siempre que se pague. | Mail 1 | 🔧 Selección visual de butacas implementada; falta confirmar la compra y resolver el pago |
 | RF-21 | Una butaca no puede venderse dos veces para la misma función. | Mail 1 | ✅ Índice único |
-| RF-22 | El mapa de butacas muestra en tiempo real cuáles ya están ocupadas por otra compra. | 12/02 | ⬜ Supabase Realtime |
-| RF-23 | Las butacas accesibles se resaltan de forma distinta; las VIP también, y el usuario debe saber que compra una VIP antes de pagar. | 12/02 y 10/03 | ⬜ |
+| RF-22 | El mapa de butacas muestra en tiempo real cuáles ya están ocupadas por otra compra. | 12/02 | 🔧 RPC segura y difusión Realtime preparadas en migración; falta ejecutarla en Supabase y validar entre clientes |
+| RF-23 | Las butacas accesibles se resaltan de forma distinta; las VIP también, y el usuario debe saber que compra una VIP antes de pagar. | 12/02 y 10/03 | 🔧 E/F accesibles celestes con 28 butacas en bloques 4/20/4; J/K normales 4/20/4; VIP rosadas con recargo visible. Migraciones SQL pendientes de ejecutar |
 | RF-24 | Cada compra genera un PDF con los datos de la entrada y un QR único. | Mail 1 | ⬜ |
 | RF-25 | El QR deja de funcionar cuando la entrada se valida o el producto se entrega. | 06/02 | 🔧 Campo `codigo_qr` y estados listos; falta la validación |
 | RF-26 | El usuario puede cancelar hasta 2 horas antes de la función. No hay devolución de dinero: recibe crédito en su cuenta, visible en su perfil, que puede usar junto con otros métodos de pago. | 10/03 | ⬜ |
@@ -85,8 +85,8 @@ Sistema web para que un cine venda sus entradas online. Este documento resume **
 
 | ID | Requisito | Fuente | Estado |
 |---|---|---|---|
-| RNF-01 | Interfaces fáciles de navegar y entender, para clientes y empleados, con poco scroll. | 28/02 | 🔧 Cartelera y detalle responsive con búsqueda, filtros, estados claros y acceso rápido a los horarios; falta aplicar al resto de pantallas |
-| RNF-02 | Estilo visual único y producido. | Consigna | 🔧 Identidad de boletería en cartelera y detalle: pósteres, entradas/talones, paleta oscura y ámbar, microinteracciones; falta aplicar al resto de pantallas |
+| RNF-01 | Interfaces fáciles de navegar y entender, para clientes y empleados, con poco scroll. | 28/02 | 🔧 Cartelera, detalle y selección responsive con estados claros, leyenda y resumen de precio; falta aplicar al resto de pantallas |
+| RNF-02 | Estilo visual único y producido. | Consigna | 🔧 Identidad de boletería en cartelera y detalle: pósteres, entradas/talones, paleta oscura rojo-violeta, microinteracciones; falta aplicar al resto de pantallas |
 | RNF-03 | Angular con buenas prácticas y técnicas vistas en clase. | Consigna | 🔧 |
 | RNF-04 | Integración con Supabase (base, autenticación, seguridad, tiempo real). | Consigna | 🔧 |
 | RNF-05 | PWA instalable. | Consigna | 🔧 Manifiesto, íconos y service worker configurados; falta validar instalación/offline tras desplegar |
