@@ -1,9 +1,14 @@
 <header class="barra">
-  <a routerLink="/cartelera" class="marca">Cinéfilos</a>
+  <a routerLink="/cartelera" class="marca" aria-label="Cinéfilos, ir al inicio" title="Inicio">
+    Cinéfilos
+  </a>
   
-  <nav>
+  <nav aria-label="Navegación principal">
     <a routerLink="/cartelera" routerLinkActive="activo">Cartelera</a>
     <a routerLink="/cuenta" routerLinkActive="activo">Mi Cuenta</a>
+    @if (esAdmin()) {
+      <a routerLink="/admin" routerLinkActive="activo">Administración</a>
+    }
     <a routerLink="/login" routerLinkActive="activo">Ingresar</a>
   </nav>
 </header>

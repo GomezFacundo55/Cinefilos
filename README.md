@@ -67,7 +67,7 @@ Script completo en [`cinefilos_schema_v1.sql`](./sql/cinefilos_schema_v1.sql).
 7. **Salas con forma fija generadas por función.** `crear_butacas` genera 20 filas A–T con 28 butacas en bloques 4/20/4; E/F son accesibles y R/S/T son VIP.
 8. **Guard de rutas.** `authGuard` protege las pantallas que requieren sesión.
 9. **Interfaz pensada para el cliente apurado.** La cartelera ofrece búsqueda por título/género, filtros de un toque, estados de carga, error y vacío, y acciones visibles para llegar a las funciones.
-10. **Identidad visual "boletería de cine".** La cartelera usa fondo oscuro, tarjetas de película estilo entrada con talón troquelado, etiquetas de género y acción visible; estilos locales en los componentes y base visual global en `styles.scss`.
+10. **Identidad visual "cine noche".** La interfaz usa azul noche y navy con tarjetas en azul petróleo, texto marfil, acento dorado y azul eléctrico. Los controles mantienen estados hover y foco visibles para navegación rápida; el logo anima un aro de carga al pasar el cursor o recibir foco, respetando la preferencia de movimiento reducido.
 
 ### Avance visual de cartelera
 
