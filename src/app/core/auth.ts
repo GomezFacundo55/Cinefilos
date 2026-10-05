@@ -19,6 +19,24 @@ export class Auth {
   readonly user = computed(() => this.session()?.user ?? null);
   readonly listo: Promise<void>;
 
+  async obtenerRol(): Promise<'cliente' | 'admin' | 'empleado' | null> {
+  const usuario = this.user();
+  if (!usuario) return null;
+
+  const { data, error } = await this.supabase
+    .from('perfiles')
+    .select('rol')
+    .eq('id', usuario.id)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  const rol = data?.rol;
+  return rol === 'cliente' || rol === 'admin' || rol === 'empleado'
+    ? rol
+    : null;
+  }
+
   constructor() {
     this.listo = this.supabase.auth.getSession().then(({ data }) => {
       this.session.set(data.session);

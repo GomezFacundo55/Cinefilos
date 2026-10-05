@@ -22,15 +22,14 @@
   height: 190px;
   flex: 0 0 auto;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 75% 15%, #f0b94e55, transparent 37%),
-    linear-gradient(135deg, #54303a, #171c2b 72%);
+       background: linear-gradient(110deg,#0d3a55dd 8%, #25574e71 18%,#0d3a55dd 33%);
+
 }
 
 .ticket-poster::after {
   position: absolute;
   z-index: 1;
-  background: linear-gradient(180deg, #10121a00 35%, #10121a99);
+  background: linear-gradient(180deg, #5e72c000 35%, #10121a99);
   content: '';
   inset: 0;
   pointer-events: none;
@@ -54,11 +53,11 @@
   justify-content: flex-end;
   gap: 0.55rem;
   padding: 1.5rem;
-  color: #fff8ea;
+  color: #c4cfd6;
 }
 
 .poster-sin-imagen span {
-  color: #f0b94e;
+  color: #1cd4ec;
   font-size: 0.64rem;
   font-weight: 900;
   letter-spacing: 0.2em;
@@ -127,7 +126,7 @@
 
 .ticket-etiqueta {
   margin: 0 0 0.4rem;
-  color: #9a5737;
+  color: #000000;
   font-size: 0.61rem;
   font-weight: 900;
   letter-spacing: 0.15em;
@@ -244,7 +243,7 @@
   padding: 0.65rem 0.85rem;
   border: 0;
   border-radius: 0.65rem;
-  background: #8e393b;
+  background: #0b3358;
   color: #fff8ea;
   cursor: pointer;
   font: inherit;
@@ -254,7 +253,7 @@
 }
 
 .ticket-boton:hover {
-  background: #702b30;
+  background: #2e76b1;
   transform: translateY(-1px);
 }
 

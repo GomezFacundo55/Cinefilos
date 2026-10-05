@@ -12,14 +12,14 @@
   justify-content: space-between;
   gap: 1.5rem;
   padding: 0.75rem clamp(1.25rem, 5vw, 4.5rem);
-  border-bottom: 1px solid #ffffff17;
-  background: #151822dd;
+  border-bottom: 1px solid #ce1a1a17;
+  background: #0d3a55dd;
   backdrop-filter: blur(18px);
 }
 
 .marca {
   color: #fff8ea;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 1.55rem;
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -44,8 +44,8 @@
 
 .barra nav a:hover,
 .barra nav a.activo {
-  background: #ffffff0d;
-  color: #f0b94e;
+  background: #cc04040d;
+  color: #0ea5d3;
 }
 
 main {

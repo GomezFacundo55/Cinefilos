@@ -25,7 +25,7 @@
   align-items: center;
   gap: 0.6rem;
   margin: 0 0 1rem;
-  color: #7e0dbb;
+  color: #358fc4;
   font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -37,15 +37,15 @@
   height: 0.5rem;
   border-radius: 50%;
   background: currentColor;
-  box-shadow: 0 0 1rem #8546a8;
+  box-shadow: 0 0 1rem #178b51ab;
 }
 
 .cartelera h1 {
   margin: 0;
-  color: #fff8ea;
-  font-family: Georgia, 'Times New Roman', serif;
+  color: #e4dde7;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: clamp(3rem, 7vw, 5.6rem);
-  font-weight: 500;
+  font-weight: 100;
   letter-spacing: -0.055em;
   line-height: 0.98;
 }
@@ -53,7 +53,7 @@
 .cartelera-descripcion {
   max-width: 430px;
   margin: 1rem 0 0;
-  color: #b9bac5;
+  color: #bac5b9;
   font-size: 1rem;
   line-height: 1.65;
 }
@@ -67,18 +67,18 @@
   padding: 0 1rem;
   border: 1px solid #ffffff21;
   border-radius: 0.85rem;
-  background: #ffffff0a;
+  background: #0413e00a;
   transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
 .buscador:focus-within {
-  border-color: #f0b94e99;
-  background: #ffffff10;
+  border-color: #ebeae899;
+  background: #061da010;
   box-shadow: 0 0 0 3px #f0b94e20;
 }
 
 .buscador-icono {
-  color: #f0b94e;
+  color: #0b83b3;
   font-size: 1.8rem;
   line-height: 1;
 }
@@ -89,7 +89,7 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: #fff8ea;
+  color: #e79e0b;
   font: inherit;
   font-size: 0.88rem;
 }
@@ -171,7 +171,7 @@
   min-height: 390px;
   border: 1px solid #ffffff12;
   border-radius: 1.15rem;
-  background: linear-gradient(110deg, #ffffff08 8%, #ffffff15 18%, #ffffff08 33%);
+  background: linear-gradient(110deg, #1e3c9c77 8%, #03ddb9 18%, #1a317ce5 33%);
   background-size: 200% 100%;
   animation: brillo 1.4s linear infinite;
 }
@@ -191,7 +191,7 @@
 .estado-cartelera h2 {
   margin: 1rem 0 0.45rem;
   color: #fff8ea;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 1.8rem;
   font-weight: 500;
 }
@@ -208,7 +208,7 @@
   place-items: center;
   border: 1px solid #f0b94e66;
   border-radius: 50%;
-  color: #91650d;
+  color: #53c92f;
   font-size: 1.4rem;
 }
 
@@ -267,7 +267,7 @@
   padding: 0;
   border: 1px solid #ffffff24;
   border-radius: 0.75rem;
-  background: linear-gradient(145deg, #763b78, #201522);
+  background: linear-gradient(145deg, #0f6fa7, #41102c);
   color: #fff;
   cursor: pointer;
   scroll-snap-align: start;
@@ -286,7 +286,7 @@
 }
 
 .poster-rapido:focus-visible {
-  outline: 3px solid #c04472;
+  outline: 3px solid #0abb36;
   outline-offset: 3px;
 }
 
